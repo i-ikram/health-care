@@ -17,20 +17,14 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '19'
-
+          
       - name: Install Supabase CLI
-        run: |
-          curl -fsSL https://cli.supabase.com/install.sh | sh
-          echo 'export PATH=$HOME/.supabase/bin:$PATH' >> $GITHUB_ENV
+        run: curl -fsSL https://cli.supabase.com/install.sh | sh
 
       - name: Supabase login
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-        run: |
-          source $GITHUB_ENV
-          supabase login --token $SUPABASE_ACCESS_TOKEN
+        run: supabase login --token $SUPABASE_ACCESS_TOKEN
 
       - name: Deploy Supabase Edge Functions
-        run: |
-          source $GITHUB_ENV
-          supabase functions deploy generate-agora-token
+        run: supabase functions deploy generate-agora-token
