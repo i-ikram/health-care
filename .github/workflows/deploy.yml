@@ -19,7 +19,7 @@ jobs:
           node-version: '19'
 
       - name: Install Supabase CLI
-        run: brew install supabase/tap/supabase
+        run: curl -fsSL https://cli.supabase.com/install.sh | sh
 
       - name: Supabase login
         env:
