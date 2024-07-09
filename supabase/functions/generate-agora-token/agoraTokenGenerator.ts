@@ -1,5 +1,5 @@
 import { hmac } from "https://deno.land/x/hmac@v2.0.1/mod.ts";
-import { encode as base64Encode } from "https://deno.land/std@0.224.0/encoding/base64url.ts";  // Correct base64 encoding import
+import { encodeBase64 as base64Encode } from "https://deno.land/std@0.224.0/encoding/base64url.ts";  // Correct base64 encoding import
 
 const VERSION = "1";
 
@@ -15,8 +15,8 @@ function generateToken(appID: string, appCertificate: string, channelName: strin
 }
 
 export function createAgoraToken(channelName: string, uid: number, role: number, expireTime: number): string {
-  const appID = "your-agora-app-id";  // Replace with your Agora App ID
-  const appCertificate = "your-agora-app-certificate";  // Replace with your Agora App Certificate
+  const appID = "2f4bfd8b24604dd59bbfb49d5a0fe59a";  // Replace with your Agora App ID
+  const appCertificate = "20b122e9321946fb9796ee5438abacb5";  // Replace with your Agora App Certificate
   const expirationTimeInSeconds = expireTime;
   const privilegeExpiredTs = Math.floor(Date.now() / 1000) + expirationTimeInSeconds;
 
