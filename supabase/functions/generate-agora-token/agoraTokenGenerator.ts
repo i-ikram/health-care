@@ -1,5 +1,5 @@
 import { hmac } from "https://deno.land/x/hmac@v2.0.1/mod.ts";
-import { encode as base64Encode } from "https://deno.land/std@0.224.0/encoding/base64.ts";
+import { encodeBase64 } from "https://deno.land/std@0.224.0/encoding/base64.ts";
 
 const VERSION = "1";
 
@@ -11,7 +11,7 @@ function generateToken(appID: string, appCertificate: string, channelName: strin
   const message = `${appID}${channelName}${uidStr}${ts}${randomInt}${privilegeExpiredTs}`;
   const signature = hmac("sha256", appCertificate, message, "utf8", "hex");
   const content = `${signature}${appID}${ts}${randomInt}${privilegeExpiredTs}`;
-  return `${VERSION}${base64Encode(new TextEncoder().encode(content))}`;
+  return `${VERSION}${encodeBase64(new TextEncoder().encode(content))}`;
 }
 
 export function createAgoraToken(channelName: string, uid: number, role: number, expireTime: number): string {
