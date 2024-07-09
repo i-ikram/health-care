@@ -1,4 +1,4 @@
-import { RtcTokenBuilder, RtcRole } from 'agora-access-token';
+import { RtcTokenBuilder, RtcRole } from './agora-access-token/rtcToekn.js';
 
 export function createAgoraToken(channelName: string, uid: number, role: RtcRole, expireTime: number) {
   const appID = "2f4bfd8b24604dd59bbfb49d5a0fe59a";
