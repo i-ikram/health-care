@@ -17,10 +17,27 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '19'
-          
+
       - name: Install Supabase CLI
         run: |
-          curl -fsSL https://cli.supabase.com/install.sh | sh
+          retry() {
+            local n=1
+            local max=5
+            local delay=5
+            while true; do
+              "$@" && break || {
+                if [[ $n -lt $max ]]; then
+                  ((n++))
+                  echo "Command failed. Attempt $n/$max:"
+                  sleep $delay;
+                else
+                  echo "The command has failed after $n attempts."
+                  return 1
+                fi
+              }
+            done
+          }
+          retry curl -fsSL https://cli.supabase.com/install.sh | sh
           echo 'export PATH="$HOME/.supabase/bin:$PATH"' >> $GITHUB_ENV
           echo 'export PATH="$HOME/.deno/bin:$PATH"' >> $GITHUB_ENV
           echo "Supabase CLI installed to: $HOME/.supabase/bin"
