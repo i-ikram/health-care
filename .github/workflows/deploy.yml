@@ -21,19 +21,20 @@ jobs:
       - name: Install Supabase CLI
         run: |
           curl -fsSL https://cli.supabase.com/install.sh | sh
-          echo "$HOME/.supabase/bin" >> $GITHUB_PATH
+          echo 'export PATH="$HOME/.supabase/bin:$PATH"' >> $GITHUB_ENV
+          echo 'export PATH="$HOME/.deno/bin:$PATH"' >> $GITHUB_ENV
           echo "Supabase CLI installed to: $HOME/.supabase/bin"
-
-      - name: List installed files for debugging
-        run: |
-          ls -al $HOME/.supabase/bin
+          ls -al $HOME/.supabase/bin || true
+          ls -al $HOME/.deno/bin || true
 
       - name: Supabase login
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
         run: |
-          ~/.supabase/bin/supabase login --token $SUPABASE_ACCESS_TOKEN
+          source $GITHUB_ENV
+          supabase login --token $SUPABASE_ACCESS_TOKEN
 
       - name: Deploy Supabase Edge Functions
         run: |
-          ~/.supabase/bin/supabase functions deploy generate-agora-token
+          source $GITHUB_ENV
+          supabase functions deploy generate-agora-token
